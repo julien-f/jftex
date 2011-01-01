@@ -40,13 +40,14 @@
   \RequirePackage{amsfonts,amsmath} % Mathematical fonts and symbols.
 \fi
 
+\RequirePackage[a4paper,margin=2cm]{geometry} % Sets the geometry.
+
 \RequirePackage[francais]{babel}      % Langue française.
 \RequirePackage{graphicx}             % Pour insérer des graphiques.
 \RequirePackage{subfig}               % Fourni un support pour l'inclusion de
                                       % petites figures ou tableaux
 \RequirePackage{url}                  % Pour gérer correctement les césures des URL.
 \RequirePackage{hyperref}             % Pour que les références soient des liens.
-\RequirePackage[margin=2cm]{geometry} % Pour changer la géométrie de pages.
 \RequirePackage{parskip}
 \RequirePackage{xspace}
 %\RequirePackage{latexsym}             % Paquetage de symboles standard de LaTeX.
@@ -163,3 +164,49 @@
 \newlatinloc{\Apriori}{A priori}
 \newlatinloc{\aposteriori}{a posteriori}
 \newlatinloc{\Aposteriori}{A posteriori}
+
+%%%%%
+
+\renewcommand{\author}[1]{%
+  \gdef\@jftex@author{#1}%
+}
+\renewcommand{\date}[1]{%
+  \gdef\@jftex@date{#1}%
+}
+\newcommand{\institute}[1]{%
+  \gdef\@jftex@institute{#1}%
+}
+\renewcommand{\title}[1]{%
+  \gdef\@jftex@title{#1}%
+}
+
+\author{Anonymous}
+\date{\today}
+\institute{\phantom} % Nothing but does not screw up the layout.
+\title{Untitled}
+
+\renewcommand{\maketitle}{
+  \noindent \rule{\linewidth}{0.2mm}
+
+  \noindent \textbf{\@jftex@institute} \hfill \textbf{\@jftex@date}
+
+  \vspace{-0.5em}
+
+  \noindent \rule{\linewidth}{0.2mm}
+
+  \vspace{1cm}
+
+  \begin{center}
+    \noindent \textbf{\Large \@jftex@title}
+
+    \vspace{1cm}
+
+    \noindent \@jftex@author
+  \end{center}
+
+  \vspace{1cm}
+
+  \noindent \rule{\linewidth}{0.2mm}
+
+  \vspace{1cm}
+}
