@@ -1,0 +1,165 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{jftex}[2011/01/01 v0.1 jftex]
+
+%%%%%
+
+% By default it is set to false.
+\newif \if@xelatex
+\newif \if@minted
+\newif \if@listings
+
+%%%%%
+
+% Guess if we are running with xelatex.
+\RequirePackage{ifxetex}
+\ifxetex
+  \@xelatextrue
+\fi
+
+%%%%%
+
+\DeclareOption{xelatex}{\@xelatextrue}
+\DeclareOption{pdflatex}{\@xelatexfalse}
+
+\DeclareOption{listings}{\@listingstrue}
+
+\DeclareOption{minted}{\@mintedtrue}
+
+\DeclareOption*{} % Ne rien faire si une option inconnue est passée.
+
+\ProcessOptions
+
+%%%%%
+
+\if@xelatex % xelatex
+  \RequirePackage{fontspec}
+  \RequirePackage{xunicode}
+  \RequirePackage{xltxtra} % Various fixes.
+\else % pdflatex
+  \RequirePackage[utf8]{inputenc}   % Uses UTF8 as input encoding.
+  \RequirePackage{amsfonts,amsmath} % Mathematical fonts and symbols.
+\fi
+
+\RequirePackage[francais]{babel}      % Langue française.
+\RequirePackage{graphicx}             % Pour insérer des graphiques.
+\RequirePackage{subfig}               % Fourni un support pour l'inclusion de
+                                      % petites figures ou tableaux
+\RequirePackage{url}                  % Pour gérer correctement les césures des URL.
+\RequirePackage{hyperref}             % Pour que les références soient des liens.
+\RequirePackage[margin=2cm]{geometry} % Pour changer la géométrie de pages.
+\RequirePackage{parskip}
+\RequirePackage{xspace}
+%\RequirePackage{latexsym}             % Paquetage de symboles standard de LaTeX.
+
+\if@listings
+  \RequirePackage{listings}
+  \RequirePackage{xcolor}
+\fi
+
+\if@minted
+  \RequirePackage{minted}
+\fi
+
+%%%%%
+
+\if@listings
+  \definecolor{Aluminium}{rgb}{0.95,0.95,0.94}
+
+  \lstset{
+    % Type du cadre (“none”, “leftline”, “topline”, “bottomline”, “lines”,
+    % “single” or “shadowbox”).
+    frame=single,
+    %
+    % Pour chaque coin du cadre (haut-droit, bas-droit, bas-gauche et haut-gauche)
+    % définie si il est arrondi (“t”) ou non (“f”) (défaut “ffff”).
+    frameround=tttt,
+    %
+    % Couleur du fond.
+    backgroundcolor=\color{Aluminium},
+    %
+    % Style de base du texte (défaut “{}”).
+    basicstyle=\small\ttfamily,
+    %
+    % Listings doit-il couper les lignes trop longues ? (défaut “false”).
+    breaklines=true,
+    %
+    % Style pour les commentaires.
+    commentstyle=\rmfamily\color[rgb]{0.3,0.3,0.3}\itshape,
+    %
+    % Définie des styles supplémentaires pour certains mots.
+    %emph=[1]{},       % Définir les mots.
+    %moreemph=[1]{},   % Ajouter des mots.
+    %deleteemph=[1]{}, % Supprimer des mots.
+    %emphstyle=[1]{},  % Définir le style pour ces mots.
+    %
+    % Définie le style pour les mots clefs.
+    keywordstyle=\color{blue},
+    %
+    % Définie le langage par défaut utilisé pour la coloration syntaxique
+    % (defaut “{}”).
+    %language=,
+    %
+    % Hauteur de l'espace inséré entre chaque ligne (défaut 0pt).
+    %lineskip=1pt,
+    %
+    % Affichage des numéros de ligne (“none” par défaut, “left” ou “right”).
+    numbers=left,
+    %
+    % Distance entre les numéros de ligne et le code (défaut “10pt”).
+    numbersep=5pt,
+    %
+    % Style des numéros de ligne.
+    numberstyle=\tt\small\color{gray},
+    %
+    % Nombre d'espace représentant une tabulation (défaut “8”).
+    tabsize=4,
+    %
+    % Les commentaires doivent-ils être interprétés comme du LaTeX
+    % (defaut “false”) ?
+    %texcl=true,
+  }
+\fi
+
+%%%%%
+
+% Où les images sont-elles rangées ?
+\graphicspath{
+  {images/}
+}
+
+% Extensions par défaut des images.
+\DeclareGraphicsExtensions{.pdf}
+
+%%%%%
+
+% Command for creating text macros.
+\newcommand{\newtextcommand}[2]{%
+  \providecommand{#1}{#2\xspace}%
+}
+
+% Command for displaying proper-nouns.
+\newcommand{\printpropernoun}[1]{%
+  \emph{#1}%
+}
+% Command for displaying Latin locutions.
+\newcommand{\printlatinloc}[1]{%
+  \textit{#1}%
+}
+
+% Command for creating proper-noun marcros.
+\newcommand{\newpropernoun}[2]{%
+  \newtextcommand{#1}{\printpropernoun{#2}}%
+}
+
+% Command for creating Latin locutions.
+\newcommand{\newlatinloc}[2]{%
+  \newtextcommand{#1}{\printlatinloc{#2}}%
+}
+
+\newtextcommand{\cad}{c'est-à-dire}
+\newtextcommand{\Cad}{C'est-à-dire}
+
+\newlatinloc{\apriori}{a priori}
+\newlatinloc{\Apriori}{A priori}
+\newlatinloc{\aposteriori}{a posteriori}
+\newlatinloc{\Aposteriori}{A posteriori}
