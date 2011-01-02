@@ -1,37 +1,65 @@
+%%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% Author:
+%   Julien Fontanet <julien.fontanet@isonoe.net>
+%
+% v0.2 - 2011-01-02
+% - The document's language can be specified with the “lang” option.
+% - The “\maketitle” command is now compatible with languages other than French.
+% - jftex now uses the “kvoptions” package to parse its options.
+%%
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{jftex}[2011/01/01 v0.1 jftex]
+\ProvidesPackage{jftex}[2011/01/02 v0.2 jftex]
 
 %%%%%
 
-% By default it is set to false.
-\newif \if@xelatex
-\newif \if@minted
-\newif \if@listings
-
-%%%%%
-
-% Guess if we are running with xelatex.
 \RequirePackage{ifxetex}
+
+%%%%%
+
+\RequirePackage{kvoptions}
+
+\SetupKeyvalOptions{
+  family=@jftex,
+  prefix=@jftex@
+}
+
+% This option override the xelatex detection.
 \ifxetex
-  \@xelatextrue
+  \DeclareBoolOption[true]{xelatex}
+\else
+  \DeclareBoolOption{xelatex}
 \fi
 
+\DeclareComplementaryOption{pdflatex}{xelatex}
+
+% Should the listings package be included?
+\DeclareBoolOption[false]{listings}
+
+% Should the minted package be included?
+\DeclareBoolOption[false]{minted}
+
+% What is the language(s) of this document?
+\DeclareStringOption[francais]{lang}
+
+\ProcessKeyvalOptions*
+
 %%%%%
 
-\DeclareOption{xelatex}{\@xelatextrue}
-\DeclareOption{pdflatex}{\@xelatexfalse}
-
-\DeclareOption{listings}{\@listingstrue}
-
-\DeclareOption{minted}{\@mintedtrue}
-
-\DeclareOption*{} % Ne rien faire si une option inconnue est passée.
-
-\ProcessOptions
-
-%%%%%
-
-\if@xelatex % xelatex
+\if@jftex@xelatex % xelatex
   \RequirePackage{fontspec}
   \RequirePackage{xunicode}
   \RequirePackage{xltxtra} % Various fixes.
@@ -40,9 +68,9 @@
   \RequirePackage{amsfonts,amsmath} % Mathematical fonts and symbols.
 \fi
 
+\RequirePackage[\@jftex@lang]{babel}          % Sets the document language.
 \RequirePackage[a4paper,margin=2cm]{geometry} % Sets the geometry.
 
-\RequirePackage[francais]{babel}      % Langue française.
 \RequirePackage{graphicx}             % Pour insérer des graphiques.
 \RequirePackage{subfig}               % Fourni un support pour l'inclusion de
                                       % petites figures ou tableaux
@@ -52,18 +80,18 @@
 \RequirePackage{xspace}
 %\RequirePackage{latexsym}             % Paquetage de symboles standard de LaTeX.
 
-\if@listings
+\if@jftex@listings
   \RequirePackage{listings}
   \RequirePackage{xcolor}
 \fi
 
-\if@minted
+\if@jftex@minted
   \RequirePackage{minted}
 \fi
 
 %%%%%
 
-\if@listings
+\if@jftex@listings
   \definecolor{Aluminium}{rgb}{0.95,0.95,0.94}
 
   \lstset{
