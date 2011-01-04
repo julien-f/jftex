@@ -1,0 +1,32 @@
+\documentclass{jftexcv}
+
+
+% On redéfinit certaines commandes afin d'avoir un affichage en français.
+\renewcommand{\printbirth}[2]{%
+  Né le #1 à #2%
+}
+\renewcommand{\printnationality}[1]{%
+  Nationalité #1%
+}
+
+\begin{document}
+
+\makeheader{
+  firstname = Julien,
+  lastname  = Fontanet,
+%
+  birthdate  = 25 janvier 1986,
+  birthplace = Leiden (Pays-Bas),
+%
+  nationality = française,
+%
+  address = {44D avenue la Bruyère, 38~000 Grenoble},
+  email   = julien.fontanet@isonoe.net,
+  phone   = (+33)~6.25.30.07.11,
+%
+  photography = identity.jpg,
+%
+  title = Recherche d'un stage de M2 Math-Info,
+}
+
+\end{document}

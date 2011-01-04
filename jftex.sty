@@ -15,6 +15,11 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% v0.3 - 2011-01-04
+% - The parskip package can be skipped by using the “parskip=false” option.
+% - New command “\email” to display clickable email addresses.
+% v0.2.1 - 2011-01-02
+% - The default language is now English instead of French.
 % v0.2 - 2011-01-02
 % - The document's language can be specified with the “lang” option.
 % - The “\maketitle” command is now compatible with languages other than French.
@@ -22,7 +27,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{jftex}[2011/01/02 v0.2 jftex]
+\ProvidesPackage{jftex}[2011/01/04 v0.3 jftex]
 
 %%%%%
 
@@ -52,8 +57,11 @@
 % Should the minted package be included?
 \DeclareBoolOption[false]{minted}
 
+% Should the parskip package be included?
+\DeclareBoolOption[true]{parskip}
+
 % What is the language(s) of this document?
-\DeclareStringOption[francais]{lang}
+\DeclareStringOption[english]{lang}
 
 \ProcessKeyvalOptions*
 
@@ -76,9 +84,12 @@
                                       % petites figures ou tableaux
 \RequirePackage{url}                  % Pour gérer correctement les césures des URL.
 \RequirePackage{hyperref}             % Pour que les références soient des liens.
-\RequirePackage{parskip}
 \RequirePackage{xspace}
 %\RequirePackage{latexsym}             % Paquetage de symboles standard de LaTeX.
+
+\if@jftex@parskip
+  \RequirePackage{parskip}
+\fi
 
 \if@jftex@listings
   \RequirePackage{listings}
@@ -160,6 +171,11 @@
 \DeclareGraphicsExtensions{.pdf}
 
 %%%%%
+
+% Command for displaying properly email addresses.
+\newcommand{\email}[1]{%
+  \href{mailto:#1}{\nolinkurl{#1}}%
+}
 
 % Command for creating text macros.
 \newcommand{\newtextcommand}[2]{%
