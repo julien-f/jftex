@@ -15,6 +15,10 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% v0.3.1 - 2011-01-07
+% - “png”, “jpg” and “jpeg” added to the default images extension list.
+% - The “\newmathcommand” macro simplify the definition of math-oriented
+%   commands.
 % v0.3 - 2011-01-04
 % - The parskip package can be skipped by using the “parskip=false” option.
 % - New command “\email” to display clickable email addresses.
@@ -168,7 +172,7 @@
 }
 
 % Extensions par défaut des images.
-\DeclareGraphicsExtensions{.pdf}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg}
 
 %%%%%
 
@@ -208,6 +212,12 @@
 \newlatinloc{\Apriori}{A priori}
 \newlatinloc{\aposteriori}{a posteriori}
 \newlatinloc{\Aposteriori}{A posteriori}
+
+%%%%%
+
+\newcommand{\newmathcommand}[1]{%
+  \ensuremath{#1}%
+}
 
 %%%%%
 
