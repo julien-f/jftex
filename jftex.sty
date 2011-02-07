@@ -15,6 +15,8 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% v0.3.2 - 2011-02-07
+% - Move class-dependant configurations out of jftex (see “jfarticle”).
 % v0.3.1 - 2011-01-07
 % - “png”, “jpg” and “jpeg” added to the default images extension list.
 % - The “\newmathcommand” macro simplify the definition of math-oriented
@@ -31,7 +33,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{jftex}[2011/01/07 v0.3.1 jftex]
+\ProvidesPackage{jftex}[2011/01/07 v0.3.2 jftex]
 
 %%%%%
 
@@ -80,16 +82,22 @@
   \RequirePackage{amsfonts,amsmath} % Mathematical fonts and symbols.
 \fi
 
-\RequirePackage[\@jftex@lang]{babel}          % Sets the document language.
-\RequirePackage[a4paper,margin=2cm]{geometry} % Sets the geometry.
+% Sets the document language.
+\RequirePackage[\@jftex@lang]{babel}
 
-\RequirePackage{graphicx}             % Pour insérer des graphiques.
-\RequirePackage{subfig}               % Fourni un support pour l'inclusion de
-                                      % petites figures ou tableaux
-\RequirePackage{url}                  % Pour gérer correctement les césures des URL.
-\RequirePackage{hyperref}             % Pour que les références soient des liens.
+% For graphics.
+\RequirePackage{graphicx}
+
+% For insertion of sub-figures or sub-tables.
+\RequirePackage{subfig}
+
+% URL hyphenations.
+\RequirePackage{url}
+
+% Sets references as links.
+\RequirePackage{hyperref}
+
 \RequirePackage{xspace}
-%\RequirePackage{latexsym}             % Paquetage de symboles standard de LaTeX.
 
 \if@jftex@parskip
   \RequirePackage{parskip}

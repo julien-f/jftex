@@ -17,7 +17,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jftexcv}[2011/01/04 v0.1 jftexcv]
+\ProvidesClass{jfcv}[2011/01/04 v0.1 jftexcv]
 
 %%%%%
 
