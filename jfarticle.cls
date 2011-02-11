@@ -25,10 +25,10 @@
 
 %%%%%
 
-\RequirePackage{jftex}
-
 % Sets the geometry.
 \RequirePackage[a4paper,margin=2cm]{geometry}
+
+\RequirePackage{jftex}
 
 %%%%%
 
