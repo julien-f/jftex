@@ -14,10 +14,13 @@
 %
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
+%
+% 2011-04-01 - v0.2
+% - There is now a “\subtitle” command.
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jftexcv}[2011/01/04 v0.1 jftexcv]
+\ProvidesClass{jftexcv}[2011/01/04 v0.2 jftexcv]
 
 %%%%%
 
@@ -44,11 +47,15 @@
 \renewcommand{\title}[1]{%
   \gdef\@jftex@title{#1}%
 }
+\newcommand{\subtitle}[1]{%
+  \gdef\@jftex@subtitle{#1}%
+}
 
 \author{Anonymous}
 \date{\today}
 \institute{\phantom} % Nothing but does not screw up the layout.
 \title{Untitled}
+%\subtitle{}
 
 \renewcommand{\maketitle}{
   \noindent \rule{\linewidth}{0.2mm}
@@ -59,17 +66,22 @@
 
   \noindent \rule{\linewidth}{0.2mm}
 
-  \vspace{1cm}
+  \vspace{0.75cm}
 
   \begin{center}
     \noindent \textbf{\Large \@jftex@title}
+    \ifx\@jftex@subtitle\undefined
+    \else
+    \\[0.5cm]
+    \noindent \textit{\@jftex@subtitle}
+    \fi
 
     \vspace{1cm}
 
     \noindent \@jftex@author
   \end{center}
 
-  \vspace{1cm}
+  \vspace{0.25cm}
 
   \noindent \rule{\linewidth}{0.2mm}
 
