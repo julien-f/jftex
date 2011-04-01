@@ -17,19 +17,19 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jfcv}[2011/01/04 v0.1 jftexcv]
+\ProvidesClass{jfcv}[2011/01/04 v0.1 jfcv]
 
-%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \LoadClass{article}
 
-%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{kvoptions}
 
 \RequirePackage[parskip=false]{jftex} % For xelatex compatibility.
 
-%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \SetupKeyvalOptions{
   family=@jftexcv@makeheader,
@@ -57,7 +57,7 @@
 % The CV's title.
 \DeclareStringOption{title}
 
-%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\makeheader}[1]{
   \setkeys{@jftexcv@makeheader}{#1}
@@ -78,7 +78,7 @@
   \noindent \Large{\@jftexcv@makeheader@title}
 }
 
-%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\printbirth}[2]{%
   Born the #1 at #2%
