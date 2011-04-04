@@ -15,6 +15,8 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% 2011-04-04 - v0.1.2
+% - Twoside mode added.
 % 2011-04-04 - v0.1.1
 % - The metacommands have been moved into jftex to avoid code duplication.
 % - Initial “\maketitle” layout.
@@ -23,7 +25,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jfreport}[2011/04/01 v0.1.1 jfreport]
+\ProvidesClass{jfreport}[2011/04/04 v0.1.2 jfreport]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,7 +34,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Sets the geometry.
-\RequirePackage[a4paper,margin=2cm]{geometry}
+\RequirePackage[a4paper,twoside,margin=2cm]{geometry}
 
 \RequirePackage[fancyhdr,metacommands]{jftex}
 
