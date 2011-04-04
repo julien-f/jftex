@@ -15,12 +15,15 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% 2011-04-04 - v0.1.1
+% - The metacommands have been moved into jftex to avoid code duplication.
+% - Initial “\maketitle” layout.
 % 2011-04-01 - v0.1
 % - First version.
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{jfreport}[2011/04/01 v0.1 jfreport]
+\ProvidesClass{jfreport}[2011/04/01 v0.1.1 jfreport]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,51 +34,7 @@
 % Sets the geometry.
 \RequirePackage[a4paper,margin=2cm]{geometry}
 
-\RequirePackage[fancyhdr]{jftex}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% These commands allow one to enter various meta-data about the report.
-\renewcommand{\author}[2][\NoValue]{%
-  \gdef\@jfreport@author{#2}
-  \gdef\@jfreport@author@short{\IfValueTF{#1}{#1}{#2}}
-}
-\renewcommand{\date}[2][\NoValue]{%
-  \gdef\@jfreport@date{#2}%
-  \gdef\@jfreport@date@short{\IfValueTF{#1}{#1}{#2}}%
-}
-\newcommand{\institute}[2][\NoValue]{%
-  \gdef\@jfreport@institute{#2}%
-  \gdef\@jfreport@institute@short{\IfValueTF{#1}{#1}{#2}}%
-}
-\renewcommand{\title}[2][\NoValue]{%
-  \gdef\@jfreport@title{#2}%
-  \gdef\@jfreport@title@short{\IfValueTF{#1}{#1}{#2}}%
-}
-\newcommand{\subtitle}[2][\NoValue]{%
-  \gdef\@jfreport@subtitle{#2}%
-  \gdef\@jfreport@subtitle@short{\IfValueTF{#1}{#1}{#2}}%
-}
-
-% These commands are  provided to the user to  access the information previously
-% entered.
-\newtextcommand{\theauthor}{\@jfreport@author}
-\newtextcommand{\theauthorshort}{\@jfreport@author@short}
-\newtextcommand{\thedate}{\@jfreport@date}
-\newtextcommand{\thedateshort}{\@jfreport@date@short}
-\newtextcommand{\theinstitute}{\@jfreport@institute}
-\newtextcommand{\theinstituteshort}{\@jfreport@institute@short}
-\newtextcommand{\thetitle}{\@jfreport@title}
-\newtextcommand{\thetitleshort}{\@jfreport@title@short}
-\newtextcommand{\thesubtitle}{\@jfreport@subtitle}
-\newtextcommand{\thesubtitleshort}{\@jfreport@subtitle@short}
-
-% Initialize default values.
-\author{Anonymous}
-\date{\today}
-\institute{\NoValue}
-\title{Untitled}
-\subtitle{\NoValue}
+\RequirePackage[fancyhdr,metacommands]{jftex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -100,12 +59,32 @@
 
 \renewcommand{\maketitle}{
   \begin{titlepage}
+    \noindent \IfValueTF{\theinstitute}{\theinstitute}{\phantom{}}
 
-    \thetitle
+    \vspace{3cm}
 
-    \theauthor
+    \noindent \rule{\linewidth}{0.5mm}
 
-    \thedate
+    \vspace{1cm}
 
+    \noindent \huge{\thetitle}
+
+    \vspace{1cm}
+
+    \IfValueTF{\thesubtitle}{
+      \begin{flushright}
+        \Large{\thesubtitle}
+      \end{flushright}
+    }{}
+
+    \noindent \rule{\linewidth}{1mm}
+
+    \begin{flushright}
+      \normalsize{\thedate}
+    \end{flushright}
+
+    \vfill
+
+    \noindent \textbf{\large{\theauthor}}
   \end{titlepage}
 }

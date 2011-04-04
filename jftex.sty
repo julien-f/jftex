@@ -15,6 +15,18 @@
 % Author:
 %   Julien Fontanet <julien.fontanet@isonoe.net>
 %
+% v0.3.5 - 2011-04-04
+% - The  new option  “metacommands”  makes jftex  declare  various commands  for
+%   defining  meta-data  about the  document  such  as  (the default  value  are
+%   mentionned between parentheses):
+%   - the author (Anonymous);
+%   - the date (the current date);
+%   - the institute (\NoValue);
+%   - the title (Untitled);
+%   - the subtitle (\NoValue).
+%   The entries for which the default value is \NoValue are optional.
+%   This option is  not meant to be used  by a common user but  to internally to
+%   create new document classes.
 % v0.3.4 - 2011-04-01
 % - Three   new  commands   “\NoValue”,  “\IfValueTF”   and   its  complementary
 %   “\IfNoValueTF”  which  are  used  by  “jfreport” and  probably  will  be  in
@@ -39,7 +51,7 @@
 %%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{jftex}[2011/01/07 v0.3.4 jftex]
+\ProvidesPackage{jftex}[2011/01/07 v0.3.5 jftex]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,6 +65,8 @@
   family=@jftex,
   prefix=@jftex@
 }
+
+\DeclareBoolOption[false]{metacommands}
 
 % This option override the xelatex detection.
 \ifxetex
@@ -152,6 +166,53 @@
 \providecommand{\IfNoValueTF}[3]{%
   \ifthenelse{\equal{#1}{\NoValue}}{#2}{#3}%
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\if@jftex@metacommands
+
+  % These commands allow one to enter various meta-data about the report.
+  \renewcommand{\author}[2][\NoValue]{%
+    \gdef\@jftex@author{#2}
+    \gdef\@jftex@author@short{\IfValueTF{#1}{#1}{#2}}
+  }
+  \renewcommand{\date}[2][\NoValue]{%
+    \gdef\@jftex@date{#2}%
+    \gdef\@jftex@date@short{\IfValueTF{#1}{#1}{#2}}%
+  }
+  \newcommand{\institute}[2][\NoValue]{%
+    \gdef\@jftex@institute{#2}%
+    \gdef\@jftex@institute@short{\IfValueTF{#1}{#1}{#2}}%
+  }
+  \renewcommand{\title}[2][\NoValue]{%
+    \gdef\@jftex@title{#2}%
+    \gdef\@jftex@title@short{\IfValueTF{#1}{#1}{#2}}%
+  }
+  \newcommand{\subtitle}[2][\NoValue]{%
+    \gdef\@jftex@subtitle{#2}%
+    \gdef\@jftex@subtitle@short{\IfValueTF{#1}{#1}{#2}}%
+  }
+
+  % These commands are provided to the user to access the information previously
+  % entered.
+  \newcommand{\theauthor}{\@jftex@author}
+  \newcommand{\theauthorshort}{\@jftex@author@short}
+  \newcommand{\thedate}{\@jftex@date}
+  \newcommand{\thedateshort}{\@jftex@date@short}
+  \newcommand{\theinstitute}{\@jftex@institute}
+  \newcommand{\theinstituteshort}{\@jftex@institute@short}
+  \newcommand{\thetitle}{\@jftex@title}
+  \newcommand{\thetitleshort}{\@jftex@title@short}
+  \newcommand{\thesubtitle}{\@jftex@subtitle}
+  \newcommand{\thesubtitleshort}{\@jftex@subtitle@short}
+
+  % Initialize default values.
+  \author{Anonymous}
+  \date{\today}
+  \institute{\NoValue}
+  \title{Untitled}
+  \subtitle{\NoValue}
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
